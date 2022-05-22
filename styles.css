@@ -1,0 +1,19 @@
+h1,
+h2 {
+    text-align: center;
+}
+
+button {
+    width: 50em;
+    height: 10em;
+    font-size: large;
+}
+
+.box-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.choice-box {
+}
