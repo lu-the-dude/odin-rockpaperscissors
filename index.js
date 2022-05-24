@@ -1,21 +1,58 @@
-function chooseRandomFromArray(arr) {
-    const choice = arr[Math.floor(Math.random() * arr.length)];
-    return choice;
+var playerScore = 0;
+var cpuScore = 0;
+
+function chooseForCpu() {
+    const cpuChoice = ["Rock", "Paper", "Scissors"][Math.floor(Math.random() * 3)];
+    return cpuChoice;
 }
+
+function playRound(playerChoice, cpuChoice) {
+    const outcome = document.querySelector('#outcome');
+    const playerScoreOutput = document.querySelector('#player-score');
+    const cpuScoreOutput = document.querySelector('#cpu-score');
+    outcome.innerText = "";
+
+    if (playerChoice === cpuChoice) {
+        outcome.innerText = "Tied!";
+        return;
+    }
+    
+    if (playerChoice === "Rock" && cpuChoice === "Scissors"
+     || playerChoice === "Scissors" && cpuChoice === "Paper"
+     || playerChoice === "Paper" && cpuChoice === "Rock") {
+        outcome.innerText = "You win!";
+        playerScore++;
+        playerScoreOutput.innerText = `Player score: ${playerScore}`;
+
+    } else { 
+        outcome.innerText = "You lost :(";
+        cpuScore++;
+        cpuScoreOutput.innerText = `CPU score: ${cpuScore}`;
+
+    }
+}
+
+
 
 const choices = document.querySelectorAll(".choice-box");
 
 choices.forEach( box => {
-    box.addEventListener('click', e => {
-        console.log(e.target.innerText);
-    })
 
     box.addEventListener('click', e => {
-        let cpuPlay = chooseRandomFromArray(["Rock", "Paper", "Scissors"]);
-        const computerChoice = document.querySelector('#computer-choice');
-        computerChoice.innerText = `Computer chooses: ${cpuPlay}`;
+    const playerChoice = e.target.innerText;
+    const playerChoiceOutput = document.querySelector('#player-output');
+    playerChoiceOutput.innerText = `You chose: ${playerChoice}`
+
+    const cpuChoice = chooseForCpu();
+    const cpuChoiceOutput = document.querySelector('#cpu-output');
+    cpuChoiceOutput.innerText = `CPU chose: ${cpuChoice}`;
+
+    playRound(playerChoice, cpuChoice);
+
     })
-})
+
+});
+
 
 
 
