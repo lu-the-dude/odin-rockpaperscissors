@@ -10,19 +10,19 @@ function playRound(playerChoice, cpuChoice) {
     const playerScoreOutput = document.querySelector('#player-score');
     const cpuScoreOutput = document.querySelector('#cpu-score');
 
-    const outcome = document.querySelector('#round-outcome');
-    outcome.innerText = "";
+    const roundOutcome = document.querySelector('#round-outcome');
+    roundOutcome.innerText = "";
 
     if (playerChoice === cpuChoice) {
-        outcome.innerText = "Tied!";
+        roundOutcome.innerText = "Tied!";
     } else if (playerChoice === "Rock" && cpuChoice === "Scissors"
             || playerChoice === "Scissors" && cpuChoice === "Paper"
             || playerChoice === "Paper" && cpuChoice === "Rock") {
-        outcome.innerText = "You won!";
+        roundOutcome.innerText = "You won!";
         playerScore++;
         playerScoreOutput.innerText = `Player score: ${playerScore}`;
     } else { 
-        outcome.innerText = "You lose :(";
+        roundOutcome.innerText = "You lose.";
         cpuScore++;
         cpuScoreOutput.innerText = `CPU score: ${cpuScore}`;
     }
@@ -38,15 +38,27 @@ function playRound(playerChoice, cpuChoice) {
         let winOrLoseDisplay = document.querySelector('#win-or-lose-message');
 
         if (playerScore < cpuScore) {
-            winOrLoseDisplay.innerText = "You lose."
+            winOrLoseDisplay.innerText = "You lost :("
+        }
+
+        if (playerScore < cpuScore && playerScore === 0) {
+            winOrLoseDisplay.innerText += " Ouch."
         }
 
         if (playerScore === cpuScore) {
-            winOrLoseDisplay.innerText = "Tie match!"
+            winOrLoseDisplay.innerText = "Tie game!"
         }
 
         if (playerScore > cpuScore) {
-            winOrLoseDisplay.innerText = "You win!"
+            winOrLoseDisplay.innerText = "You won!"
+        }
+
+        if (playerScore > cpuScore && cpuScore === 0) {
+            winOrLoseDisplay.innerText += " They didn't stand a chance."
+        }
+
+        if (Math.abs(playerScore - cpuScore) === 1) {
+            winOrLoseDisplay.innerText += " Close one!"
         }
 
         let resultDiv = document.querySelector('#result');
