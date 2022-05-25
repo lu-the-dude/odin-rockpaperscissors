@@ -1,9 +1,17 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #e8ebe4;
+}
+
 h1,
 h2 {
     text-align: center;
 }
 
-button {
+.choice-box {
     width: 50em;
     height: 10em;
     font-size: large;
@@ -16,4 +24,33 @@ button {
 }
 
 .choice-box {
+    
+}
+
+#play-outcome {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin: 50px 0 0 0;
+    height: 100px;
+}
+
+#match-outcome {
+    text-align: center;
+}
+
+#score-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 30px;
+}
+
+#result {
+    margin-top: 110px;
+    text-align: center;
+}
+
+#player-output,
+#cpu-output {
+    font-size: larger;
 }
