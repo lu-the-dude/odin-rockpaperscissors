@@ -1,126 +1,96 @@
-function chooseRandomFromArray(arr) {
-    const choice = arr[Math.floor(Math.random() * arr.length)];
-    return choice;
+var playerScore = 0;
+var cpuScore = 0;
+var round = 0;
+
+function chooseForCpu() {
+    return ["Rock", "Paper", "Scissors"][Math.floor(Math.random() * 3)];
+}
+
+function playRound(playerChoice, cpuChoice) {
+    const playerScoreOutput = document.querySelector('#player-score');
+    const cpuScoreOutput = document.querySelector('#cpu-score');
+
+    const roundOutcome = document.querySelector('#round-outcome');
+    roundOutcome.innerText = "";
+
+    if (playerChoice === cpuChoice) {
+        roundOutcome.innerText = "Tied!";
+    } else if (playerChoice === "Rock" && cpuChoice === "Scissors"
+            || playerChoice === "Scissors" && cpuChoice === "Paper"
+            || playerChoice === "Paper" && cpuChoice === "Rock") {
+        roundOutcome.innerText = "You won!";
+        playerScore++;
+        playerScoreOutput.innerText = `Player score: ${playerScore}`;
+    } else { 
+        roundOutcome.innerText = "You lose.";
+        cpuScore++;
+        cpuScoreOutput.innerText = `CPU score: ${cpuScore}`;
+    }
+
+    round++;
+
+    if (round === 5) {
+        let buttons = document.getElementsByClassName("choice-box");
+        for(let i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true;
+        }
+
+        let winOrLoseDisplay = document.querySelector('#win-or-lose-message');
+
+        if (playerScore < cpuScore) {
+            winOrLoseDisplay.innerText = "You lost :("
+        }
+
+        if (playerScore < cpuScore && playerScore === 0) {
+            winOrLoseDisplay.innerText += " Ouch."
+        }
+
+        if (playerScore === cpuScore) {
+            winOrLoseDisplay.innerText = "Tie game!"
+        }
+
+        if (playerScore > cpuScore) {
+            winOrLoseDisplay.innerText = "You won!"
+        }
+
+        if (playerScore > cpuScore && cpuScore === 0) {
+            winOrLoseDisplay.innerText += " They didn't stand a chance."
+        }
+
+        if (Math.abs(playerScore - cpuScore) === 1) {
+            winOrLoseDisplay.innerText += " Close one!"
+        }
+
+        let resultDiv = document.querySelector('#result');
+        let playAgainButton = document.createElement('button');
+        playAgainButton.id = "play-again-button"
+        playAgainButton.innerText = "Play again?";
+        resultDiv.appendChild(playAgainButton);
+
+
+    }
 }
 
 const choices = document.querySelectorAll(".choice-box");
 
 choices.forEach( box => {
-    box.addEventListener('click', e => {
-        console.log(e.target.innerText);
-    })
 
     box.addEventListener('click', e => {
-        let cpuPlay = chooseRandomFromArray(["Rock", "Paper", "Scissors"]);
-        const computerChoice = document.querySelector('#computer-choice');
-        computerChoice.innerText = `Computer chooses: ${cpuPlay}`;
+    const playerChoice = e.target.innerText;
+    const playerChoiceOutput = document.querySelector('#player-output');
+    playerChoiceOutput.innerText = `You chose: ${playerChoice}`
+
+    const cpuChoice = chooseForCpu();
+    const cpuChoiceOutput = document.querySelector('#cpu-output');
+    cpuChoiceOutput.innerText = `CPU chose: ${cpuChoice}`;
+
+    playRound(playerChoice, cpuChoice);
     })
-})
 
+});
 
-
-
-
-
-// const rockBox = document.querySelector('#rock-box')
-// rockBox.addEventListener('click', (e) => {
-//     console.log(e.target.innerText);
-// })
-
-
-// var playerScore = 0;
-// var computerScore = 0;
-
-// // first level is user choice
-// // second level is cpu choice
-// const outcomes = {
-
-//     "Rock": {
-//         "Rock": () => {
-//             console.log("Tied!")
-//         },
-//         "Paper": () => {
-//             computerScore++;
-//             console.log("You lose. Rock loses to paper.");
-//         },
-//         "Scissors": () => {
-//             playerScore++;
-//             console.log("You win! Rock beats Scissors!");
-//         },
-//     },
-
-//     "Paper": {
-//         "Rock": () => {
-//             playerScore++;
-//             console.log("You win! Paper beats Rock!");
-//         },
-//         "Paper": () => {
-//             console.log("Tied!")
-//         },
-//         "Scissors": () => {
-//             computerScore++;
-//             console.log("You lose. Paper loses to Scissors.");
-//         },
-//     },
-    
-//     "Scissors": {
-//         "Rock": () => {
-//             computerScore++;
-//             console.log("You lose. Scissors loses to Rock.");
-//         },
-//         "Paper": () => {
-//             playerScore++;
-//             console.log("You win! Scissors beats Paper!");
-//         },
-//         "Scissors": () => {
-//             console.log("Tied!")
-//         },
-//     }
-// }
-
-// function playerPlay() {
-//     let playerChoice = "";
-//     do {
-//         playerChoice = formatInput(prompt("Choose your move: (Rock, Paper, Scissors)"));
-//     } while (!possiblePlays.includes(playerChoice));
-
-//     console.log("\nYou chose: " + playerChoice);
-//     return playerChoice;
-// }
-
-
-
-// function formatInput(string) {
-//     return string[0].toUpperCase() + string.slice(1).toLowerCase();
-// }
-
-// function playRound(playerSelection, computerSelection) {
-//     return outcomes[playerSelection][computerSelection]();
-// }
-
-// function showResult() {
-//     console.log
-//     (`
-//     Final score:
-//     You: ${playerScore}
-//     CPU: ${computerScore}
-//     `)
-
-//     let result = playerScore > computerScore ? "You won!" 
-//                 : playerScore === computerScore ? "You and the machine are equals."
-//                 : "You lost. Better luck next time!";
-
-//     console.log(result);
-// }
-
-// function game() {
-
-//     for (let i = 0; i < 5; i++) {
-//         playRound(playerPlay(), computerPlay());
-//     }
-// }
-
-// window.onload = () => {
-//     game();
-//     showResult();
-// }
+document.addEventListener('click', e => {
+    if(e.target && e.target.id === 'play-again-button') {
+        window.location.reload();
+     }
+ });
