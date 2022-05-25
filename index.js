@@ -66,15 +66,12 @@ function playRound(playerChoice, cpuChoice) {
         playAgainButton.id = "play-again-button"
         playAgainButton.innerText = "Play again?";
         resultDiv.appendChild(playAgainButton);
-
-
     }
 }
 
 const choices = document.querySelectorAll(".choice-box");
 
 choices.forEach( box => {
-
     box.addEventListener('click', e => {
     const playerChoice = e.target.innerText;
     const playerChoiceOutput = document.querySelector('#player-output');
@@ -86,11 +83,10 @@ choices.forEach( box => {
 
     playRound(playerChoice, cpuChoice);
     })
-
 });
 
 document.addEventListener('click', e => {
     if(e.target && e.target.id === 'play-again-button') {
         window.location.reload();
-     }
- });
+    }
+});
